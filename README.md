@@ -2,7 +2,7 @@
 
 **Chat with your company documents.** Upload PDFs, Markdown or text files and ask questions in plain language. Every answer is grounded in your own sources and shows numbered citations you can check, and the assistant says "I don't know" instead of guessing.
 
-![CI](https://github.com/QuyNguyen996/ai-knowledge-copilot/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/QuyNguyen27041998/ai-knowledge-copilot/actions/workflows/ci.yml/badge.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14-black)
 ![NestJS](https://img.shields.io/badge/NestJS-10-E0234E)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB)
