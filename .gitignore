@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.next/
+*.tsbuildinfo
+next-env.d.ts
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.env
+.DS_Store

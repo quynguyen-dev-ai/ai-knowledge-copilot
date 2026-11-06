@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String      @id @default(cuid())
+  email        String      @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime    @default(now())
+  workspace    Workspace?
+}
+
+/// Every user gets a private workspace; all documents and vectors are scoped to it.
+model Workspace {
+  id        String         @id @default(cuid())
+  ownerId   String         @unique
+  owner     User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  documents Document[]
+  messages  ChatMessage[]
+  createdAt DateTime       @default(now())
+}
+
+enum DocumentStatus {
+  PROCESSING
+  READY
+  FAILED
+}
+
+model Document {
+  id          String         @id @default(cuid())
+  workspaceId String
+  workspace   Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  filename    String
+  mimeType    String
+  sizeBytes   Int
+  chunks      Int            @default(0)
+  status      DocumentStatus @default(PROCESSING)
+  error       String?
+  createdAt   DateTime       @default(now())
+
+  @@index([workspaceId, createdAt])
+}
+
+enum Role {
+  USER
+  ASSISTANT
+}
+
+model ChatMessage {
+  id          String    @id @default(cuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  role        Role
+  content     String
+  sources     Json?
+  createdAt   DateTime  @default(now())
+
+  @@index([workspaceId, createdAt])
+}
